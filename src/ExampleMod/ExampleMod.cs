@@ -1,5 +1,6 @@
 ﻿using Mafi;
 using Mafi.Base;
+using Mafi.Collections;
 using Mafi.Core;
 using Mafi.Core.Mods;
 
@@ -7,20 +8,14 @@ namespace ExampleMod;
 
 public sealed class ExampleMod : DataOnlyMod {
 
-	// Name of this mod. It will be eventually shown to the player.
-	public override string Name => "Example mod";
-
-	// Version, currently unused.
-	public override int Version => 1;
-
-
-	// Mod constructor that lists mod dependencies as parameters.
-	// This guarantee that all listed mods will be loaded before this mod.
-	// It is a good idea to depend on both `Mafi.Core.CoreMod` and `Mafi.Base.BaseMod`.
-	public ExampleMod(CoreMod coreMod, BaseMod baseMod) {
+	// Mod constructor will be called on mod loading.
+	public ExampleMod(ModManifest manifest) : base(manifest) {
 		// You can use Log class for logging. These will be written to the log file
 		// and can be also displayed in the in-game console with command `also_log_to_console`.
 		Log.Info("ExampleMod: constructed");
+
+		// The manifest.RootDirectoryPath can be used to access mod files if needed
+		// for later loading of additional content, that is not required on mod load.
 	}
 
 
@@ -38,4 +33,7 @@ public sealed class ExampleMod : DataOnlyMod {
 		registrator.RegisterDataWithInterface<IResearchNodesData>();
 	}
 
+	public override void MigrateJsonConfig(VersionSlim savedVersion, Dict<string, object> savedValues) {
+
+	}
 }

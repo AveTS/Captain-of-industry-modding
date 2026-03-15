@@ -1,4 +1,5 @@
-﻿using Mafi;
+﻿using System.Linq;
+using Mafi;
 using Mafi.Base;
 using Mafi.Core.Entities.Animations;
 using Mafi.Core.Entities.Static.Layout;
@@ -29,6 +30,10 @@ internal class ExampleMachineData : IModData {
 				changeSpeedToFit: true))
 			.BuildAndAdd();
 
+		// Example use of custom JSON config. You can add any custom data to your mod's JSON config and access it here.
+		ExampleMod mod = (ExampleMod)registrator.ActiveMod; // The cast is optional
+		int producedMaterial = mod.JsonConfig.GetInt("config_integer");
+
 		// Example of a new furnace recipe.
 		registrator.RecipeProtoBuilder
 			.Start(name: "Example smelting",
@@ -38,7 +43,7 @@ internal class ExampleMachineData : IModData {
 			.AddInput(2, Ids.Products.Coal)
 			.SetDuration(20.Seconds())
 			.AddOutput(8, ExampleModIds.Products.ExampleMoltenProduct)
-			.AddOutput(24, Ids.Products.Exhaust, outputAtStart: true)
+			.AddOutput(producedMaterial, Ids.Products.Exhaust, outputAtStart: true)
 			.BuildAndAdd();
 
 	}

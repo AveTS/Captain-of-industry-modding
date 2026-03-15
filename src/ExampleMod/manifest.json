@@ -1,0 +1,6 @@
+﻿{
+	"id": "ExampleMod",
+	"version": "0.0.1",
+	"primary_dlls": [ "ExampleMod.dll" ],
+	"non_locking_dll_load": true
+}
