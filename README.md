@@ -285,3 +285,27 @@ Now we can add asset bundles to the same directory.
 4. (optional) If you want to make it neat, you really only need the asset bundles (files in format `YourPrefabName_xxxx`, without extension) and the `mafi_bundles.manifest` file. All other `.manifest` files could be removed as well as the `AssetBundles` file.
 
 If you make any changes to your prefabs, simply rebuild asset bundles and use the new files from the `AssetBundles` directory.
+
+## Running game directly in Unity
+
+It is possible to run the game directly in the Unity editor.
+This allows you to inspect the running game's scene, inspect and debug UI, validate colliders, run performance analysis, and more.
+Note that the game uses instancing heavily and most meshes in the game are not GameObjects, thus are not selectable.
+
+This is how to make it work for you:
+
+1. Complete the [Unity setup](#unity-setup) guide in Assets creation above.
+2. Select the `Game` object in the Hierarchy tab.
+3. In the Inspector tab, you should see 3 entries with missing script references, replace them as follows (if not, just add new ones):
+  - First: `GameMainMb`
+  - Second: `GameDebugConfigStatelessMb`
+  - Third: `GameDebugConfig`
+4. In the `GameMainMb`, set the `Working Dir Path Override` to `%COI_ROOT%`, and the `Core Asset Bundle Path` to `%COI_ROOT%\AssetBundles` (`COI_ROOT` is set up in [Getting started](#getting-started)).
+5. In the `GameDebugConfigStatelessMb` options, check `Skip splash screen`.
+6. Switch to the Game view and make sure that under Aspect ratio settings (top bar), the `Low Resolution Aspect Ratios` is unchecked and the Scale is set to 1x.
+7. Press the Play button to start the game. Press play again to terminate it.
+
+### Notes
+- Make sure your mod is reloadable during runtime by setting `"non_locking_dll_load": true` in the manifest.
+- Make sure that Unity project is configured to `Reload Domain` in `When entering play mode` (Edit > Project Settings > Editor).
+- Most options from `GameDebugConfigStatelessMb` won't work properly, sorry!
